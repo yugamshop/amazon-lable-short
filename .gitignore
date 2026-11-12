@@ -1,0 +1,17 @@
+.venv/
+runtime/
+ocr/
+wheelhouse/
+data/
+Output/
+code-backups/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.sqlite3*
+*.pdf
+*.zip
+.env*
+!.env.example
+.test-*/
+*.log

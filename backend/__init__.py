@@ -1,0 +1,1 @@
+"""LabelDesk local application modules."""

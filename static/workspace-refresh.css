@@ -1,0 +1,16 @@
+/* Compact workspace: bounded review pages keep large batches responsive. */
+body{font-size:14px}
+.card{box-shadow:0 2px 10px #102a3607;border-radius:14px}
+.card-top{gap:18px;flex-wrap:wrap}
+.actions{flex-wrap:wrap}
+.dropzone{padding:22px;border-radius:12px}
+.dropzone h3{margin:0 0 8px}
+.order-card{margin:12px 0;padding:16px;contain:layout style}
+.order-head{flex-wrap:wrap;gap:10px}
+.order-fields{gap:10px}
+.order-card input,.order-card select{min-height:38px;padding:8px}
+.review-pagination{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:14px 0;padding:14px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.review-pagination .actions{display:flex;gap:8px}
+nav .button{display:flex;width:100%;justify-content:flex-start;margin:8px 0}
+progress{width:100%;height:12px;accent-color:var(--accent)}
+@media(max-width:800px){.order-fields{grid-template-columns:1fr 1fr}.review-pagination{flex-wrap:wrap}.card{padding:16px}}

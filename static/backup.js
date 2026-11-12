@@ -1,0 +1,13 @@
+'use strict';
+document.querySelectorAll('[data-screen="Backup & Restore"], [data-screen="Settings"]').forEach(button=>button.onclick=()=>{location.href='/backup?v=5'});
+const backupButton=document.createElement('button');backupButton.textContent='Backup / Restore';backupButton.onclick=()=>screen('Backup & Restore');$('#inventory .card-top .actions').append(backupButton);
+async function loadBackupList(){try{const result=await api('/api/inventory/backups');$('#backup-list').innerHTML=result.files.length?result.files.map(name=>`<p><a class="button" href="/api/inventory/backups/${encodeURIComponent(name)}">${esc(name)}</a></p>`).join(''):'<p>No saved backups yet.</p>'}catch(e){toast(e.message)}}
+$('#show-backups').onclick=loadBackupList;
+$('#restore-run').onclick=async()=>{const file=$('#restore-file').files[0];$('#restore-status').classList.remove('error');if(!file||!$('#restore-confirm').checked){$('#restore-status').textContent='Choose a backup ZIP and tick the replacement confirmation.';return}$('#restore-run').disabled=true;$('#restore-status').textContent='Validating backup and restoring inventory…';try{const form=new FormData();form.append('file',file);const result=await api('/api/inventory/restore',{method:'POST',body:form});$('#restore-status').innerHTML=`Restored <strong>${result.products} products and ${result.photos} photos</strong>. <a href="/api/inventory/backups/${encodeURIComponent(result.recovery_backup)}">Download the previous inventory recovery backup</a>`;$('#restore-confirm').checked=false;$('#restore-file').value='';page=1;await load();await loadBackupList();window.dispatchEvent(new Event('inventory-updated'))}catch(e){$('#restore-status').classList.add('error');$('#restore-status').textContent=e.message}finally{$('#restore-run').disabled=false}};
+const refreshPickButton=document.createElement('button');refreshPickButton.textContent='Refresh images & racks';$('#pick-screen .card-top').append(refreshPickButton);
+async function refreshInventoryPick(){if(!batchId||!latestResult?.pick)return;refreshPickButton.disabled=true;try{await api('/api/batches/'+batchId+'/refresh-pick',{method:'POST'});await poll();toast('Pick list updated from inventory')}catch(e){toast(e.message)}finally{refreshPickButton.disabled=false}}
+refreshPickButton.onclick=refreshInventoryPick;window.addEventListener('inventory-updated',()=>{if(!$('#pick-content').classList.contains('hidden'))refreshInventoryPick()});
+
+function openBackupLink(){if(location.hash==='#backup'||location.pathname==='/backup')screen('Backup & Restore')}
+window.addEventListener('hashchange',openBackupLink);openBackupLink();
+document.querySelector('.aside-bottom small').textContent='Updated 9 Oct 2026 · Backup & Restore enabled';

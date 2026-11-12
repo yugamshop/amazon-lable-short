@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LabelDesk — Inventory backup and restore</title>
+<link rel="stylesheet" href="/static/backup-page.css?v=6"></head>
+<body><main><a href="/">← Back to LabelDesk</a><h1>Inventory Backup &amp; Restore</h1><small>Backup page version 5 · Products, photos, stock, racks and aliases</small>
+<section><h2>Save your inventory</h2><p>Download a complete inventory backup to move your products and photos to another PC.</p><a class="button" href="/api/inventory/backup">Download full inventory backup</a></section>
+<section><h2>Restore your inventory</h2><p>This replaces inventory on this PC. A recovery backup is saved automatically first.</p>
+<form id="restore" action="/api/inventory/restore" method="post" enctype="multipart/form-data"><input name="file" type="file" accept=".zip" required><label><input type="checkbox" required> I want to replace this PC’s inventory with the selected backup.</label><button id="restore-button">Upload &amp; restore inventory</button></form><p id="status" role="status"></p></section>
+<section><h2>Saved and recovery backups</h2><button id="saved">Show saved backups</button><div id="list"></div></section></main>
+<script src="/static/backup-page.js?v=6" defer></script></body></html>
+
